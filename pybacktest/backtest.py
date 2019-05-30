@@ -92,7 +92,7 @@ class Backtest(object):
         self.trdplot = self.sigplot = pybacktest.parts.Slicer(self.plot_trades,
                                                    obj=self.ohlc)
         self.eqplot = pybacktest.parts.Slicer(self.plot_equity, obj=self.ohlc)
-        self.run_time = time.strftime('%Y-%d-%m %H:%M %Z', time.localtime())
+        self.run_time = time.strftime('%Y-%d-%m %H:%M', time.localtime())  # 这里要把时区%Z去掉，否则画图的时候会报编码错误
         self.stats = StatEngine(lambda: self.equity)
 
     def __repr__(self):
@@ -167,7 +167,7 @@ class Backtest(object):
         import yaml
         from pprint import pprint
 
-        s = '|  %s  |' % self
+        s = u'|  %s  |' % self  # 这里需要改为utf-8，否则绘图会乱码报错
         print('-' * len(s))
         print(s)
         print('-' * len(s) + '\n')
